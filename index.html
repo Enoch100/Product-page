@@ -1,0 +1,498 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>HomeTour Reviews — Real Estate Listing Reviews & Tours</title>
+  <meta name="description" content="Honest, snappy TikTok-style reviews of real estate listings — from tiny homes to luxury estates. Weekly reviews, market tips, and price guess challenges." />
+  <meta name="theme-color" content="#0b7498" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#0f1720;
+      --card:#0b1724;
+      --muted:#9aa6b2;
+      --accent:#0bb5c1;
+      --accent-2:#06a0ff;
+      --glass: rgba(255,255,255,0.03);
+      --maxw:1100px;
+      --radius:12px;
+      font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      color-scheme: dark;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      background:
+        radial-gradient(800px 400px at 10% 10%, rgba(6,160,255,0.06), transparent 6%),
+        radial-gradient(600px 300px at 90% 90%, rgba(11,181,193,0.04), transparent 7%),
+        linear-gradient(180deg,#071017 0%, #081822 100%);
+      color:#e6f0f2;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      line-height:1.45;
+      padding:24px;
+      display:flex;
+      justify-content:center;
+      gap:24px;
+    }
+    .wrap{width:100%;max-width:var(--maxw)}
+    header{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      margin-bottom:22px;
+    }
+    .brand{
+      display:flex;
+      gap:12px;
+      align-items:center;
+    }
+    .logo{
+      width:56px;height:56px;border-radius:12px;
+      background:linear-gradient(135deg,var(--accent),var(--accent-2));
+      display:grid;place-items:center;font-weight:800;color:#001;
+      box-shadow:0 6px 20px rgba(11,181,193,0.08), inset 0 -6px 18px rgba(255,255,255,0.06);
+      font-family:monospace;
+    }
+    h1{margin:0;font-size:20px}
+    p.lead{margin:0;color:var(--muted);font-size:14px}
+    nav{display:flex;gap:10px;align-items:center}
+    .nav-btn{background:transparent;border:1px solid rgba(255,255,255,0.04);padding:8px 12px;border-radius:10px;color:var(--muted);font-size:14px}
+    .primary{
+      background:linear-gradient(90deg,var(--accent),var(--accent-2));
+      color:#001;border:none;padding:10px 14px;border-radius:10px;font-weight:700;
+      box-shadow:0 6px 18px rgba(11,181,193,0.12);
+    }
+
+    /* HERO */
+    .hero{
+      display:grid;
+      grid-template-columns: 1fr 420px;
+      gap:20px;
+      align-items:start;
+      margin-bottom:26px;
+    }
+    .card{
+      background:linear-gradient(180deg, rgba(255,255,255,0.02), var(--glass));
+      border-radius:var(--radius);
+      padding:18px;
+      box-shadow: 0 6px 30px rgba(2,8,15,0.6);
+      border:1px solid rgba(255,255,255,0.03);
+    }
+    .hero-left h2{margin:0 0 8px 0;font-size:28px}
+    .hero-left p{color:var(--muted);margin:0 0 14px}
+    .cta-row{display:flex;gap:10px;flex-wrap:wrap}
+    .chip{padding:8px 10px;border-radius:999px;background:rgba(255,255,255,0.03);font-size:13px;color:var(--muted)}
+    .stats{display:flex;gap:10px;margin-top:14px}
+    .stat{background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent);padding:14px;border-radius:10px;min-width:120px;text-align:center}
+    .stat strong{display:block;font-size:16px}
+    .hero-right .preview{
+      display:grid;
+      gap:12px;
+    }
+
+    /* Listings grid */
+    .listings{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:16px;
+      margin-top:14px;
+    }
+    .listing{
+      background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.02));
+      border-radius:12px;overflow:hidden;border:1px solid rgba(255,255,255,0.03);
+      display:flex;flex-direction:column;
+    }
+    .listing img{width:100%;height:180px;object-fit:cover;display:block}
+    .listing .meta{padding:12px}
+    .price{font-weight:800;font-size:16px}
+    .tags{display:flex;gap:8px;margin-top:8px;flex-wrap:wrap}
+    .tag{background:rgba(255,255,255,0.03);padding:6px 8px;border-radius:8px;font-size:12px;color:var(--muted)}
+
+    /* two-column section */
+    .two-col{display:grid;grid-template-columns:1fr 380px;gap:16px;margin-top:18px}
+    .video-card{display:flex;flex-direction:column;gap:12px}
+    .video-thumb{height:220px;background:#081620;border-radius:10px;display:grid;place-items:center;color:var(--muted);font-size:14px}
+    .video-meta{display:flex;justify-content:space-between;align-items:center}
+
+    /* Price-guess widget */
+    .guess{display:flex;gap:8px;align-items:center}
+    .guess input{flex:1;padding:8px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:inherit}
+    .guess button{padding:9px 12px;border-radius:8px;border:none;background:var(--accent);color:#001;font-weight:700}
+
+    /* About / Contact / Footer */
+    .about{margin-top:22px;display:grid;grid-template-columns:1fr 320px;gap:16px}
+    form{display:grid;gap:8px}
+    input,textarea{padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:inherit}
+    textarea{min-height:120px;resize:vertical}
+    .footer{margin-top:28px;color:var(--muted);font-size:13px;padding:12px 0;text-align:center}
+
+    /* Blog preview */
+    .blog-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+
+    /* Responsive */
+    @media (max-width:1000px){
+      .hero{grid-template-columns:1fr}
+      .two-col{grid-template-columns:1fr}
+      .about{grid-template-columns:1fr}
+      .listings{grid-template-columns:repeat(2,1fr)}
+    }
+    @media (max-width:600px){
+      body{padding:14px}
+      .listings{grid-template-columns:1fr}
+      .brand h1{font-size:18px}
+      .logo{width:48px;height:48px}
+    }
+  </style>
+  <!-- Schema.org JSON-LD for SEO -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"Organization",
+    "name":"HomeTour Reviews",
+    "url":"https://example.com",
+    "logo":"https://example.com/logo.png",
+    "sameAs":["https://www.tiktok.com/@yourhandle"],
+    "description":"Short, honest real estate listing reviews and tours — weekly videos, market insight, and price-guess challenges."
+  }
+  </script>
+</head>
+<body>
+  <div class="wrap" role="main">
+    <header aria-label="Main header">
+      <div class="brand">
+        <div class="logo" aria-hidden="true">HT</div>
+        <div>
+          <h1>HomeTour Reviews</h1>
+          <p class="lead">Short, punchy real-estate listing reviews — TikTok style.</p>
+        </div>
+      </div>
+
+      <nav aria-label="Primary">
+        <button class="nav-btn" onclick="scrollToId('listings')">Listings</button>
+        <button class="nav-btn" onclick="scrollToId('about')">About</button>
+        <a href="#contact" class="primary">Contact / Collab</a>
+      </nav>
+    </header>
+
+    <section class="hero">
+      <div class="card hero-left" aria-labelledby="hero-heading">
+        <h2 id="hero-heading">Real estate reviews that keep it real — fast.</h2>
+        <p>We review listings across price ranges: budget wins, quirky homes, and luxury showstoppers. Watch quick tours, learn what to watch for, and join our price-guess challenges.</p>
+
+        <div class="cta-row">
+          <a class="primary" href="https://www.tiktok.com" target="_blank" rel="noopener">Watch latest on TikTok</a>
+          <button class="nav-btn" onclick="scrollToId('listings')">See recent reviews</button>
+          <div class="chip">New: Weekly Price-Guess</div>
+        </div>
+
+        <div class="stats" aria-hidden="true">
+          <div class="stat">
+            <div class="muted">Followers</div>
+            <strong id="followers">45.2K</strong>
+            <div class="muted" style="font-size:13px">on TikTok</div>
+          </div>
+          <div class="stat">
+            <div class="muted">Avg Views</div>
+            <strong id="views">32K</strong>
+            <div class="muted" style="font-size:13px">per review</div>
+          </div>
+          <div class="stat">
+            <div class="muted">Reviews</div>
+            <strong id="reviews">128</strong>
+            <div class="muted" style="font-size:13px">published</div>
+          </div>
+        </div>
+      </div>
+
+      <aside class="card hero-right" aria-label="Latest review preview">
+        <div style="display:flex;justify-content:space-between;align-items:center;">
+          <strong>Latest Review</strong>
+          <small style="color:var(--muted)">2 days ago</small>
+        </div>
+
+        <div class="preview">
+          <div style="border-radius:10px;overflow:hidden">
+            <img src="https://images.unsplash.com/photo-1568605114967-8130f3a36994?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3&s=placeholder" alt="Preview of latest home" style="width:100%;height:220px;object-fit:cover;display:block">
+          </div>
+          <div>
+            <div style="display:flex;justify-content:space-between;align-items:center">
+              <div>
+                <div style="font-weight:700">Charming 3BR near city center</div>
+                <div style="color:var(--muted);font-size:13px;margin-top:6px">2 bed • 1.5 bath • 1,150 sqft</div>
+              </div>
+              <div style="text-align:right">
+                <div class="price">$289,000</div>
+                <div style="color:var(--muted);font-size:12px">Price guess: $300K?</div>
+              </div>
+            </div>
+            <div style="margin-top:10px;display:flex;gap:8px">
+              <a class="nav-btn" href="#" onclick="openExampleTikTok(event)">Watch clip</a>
+              <button class="nav-btn" onclick="copyListing()">Copy link</button>
+              <a class="nav-btn" href="#contact">Request review</a>
+            </div>
+          </div>
+        </div>
+      </aside>
+    </section>
+
+    <!-- LISTINGS -->
+    <section id="listings" class="card" aria-labelledby="listings-heading">
+      <h2 id="listings-heading">Recent Listing Reviews</h2>
+      <p style="color:var(--muted);margin-top:6px;margin-bottom:14px">Tap any listing to open the TikTok review or challenge the price.</p>
+
+      <div class="listings" role="list">
+        <!-- Listing 1 -->
+        <article class="listing" role="listitem" aria-labelledby="l1-title">
+          <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3&s=placeholder" alt="Cozy suburban home exterior">
+          <div class="meta">
+            <div id="l1-title" style="display:flex;justify-content:space-between;align-items:center">
+              <div>
+                <div style="font-weight:700">Cozy Suburban 3BR</div>
+                <div style="color:var(--muted);font-size:13px">Near parks & schools • 1,400 sqft</div>
+              </div>
+              <div class="price">$325,000</div>
+            </div>
+
+            <div class="tags" style="margin-top:10px">
+              <div class="tag">Good renovation</div>
+              <div class="tag">Family-friendly</div>
+              <div class="tag">Price pick: fair</div>
+            </div>
+
+            <div style="display:flex;gap:8px;margin-top:12px">
+              <button class="nav-btn" onclick="openExampleTikTok(event)">Watch</button>
+              <button class="nav-btn" onclick="openDetail('l1')">Details</button>
+            </div>
+          </div>
+        </article>
+
+        <!-- Listing 2 -->
+        <article class="listing" role="listitem" aria-labelledby="l2-title">
+          <img src="https://images.unsplash.com/photo-1572120360610-d971b9d7767c?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3&s=placeholder" alt="Modern apartment living room">
+          <div class="meta">
+            <div id="l2-title" style="display:flex;justify-content:space-between;align-items:center">
+              <div>
+                <div style="font-weight:700">Minimalist Condo — DT</div>
+                <div style="color:var(--muted);font-size:13px">1 bed • 1 bath • city view</div>
+              </div>
+              <div class="price">$485,000</div>
+            </div>
+
+            <div class="tags" style="margin-top:10px">
+              <div class="tag">Great view</div>
+              <div class="tag">High HOA</div>
+              <div class="tag">Investment</div>
+            </div>
+
+            <div style="display:flex;gap:8px;margin-top:12px">
+              <button class="nav-btn" onclick="openExampleTikTok(event)">Watch</button>
+              <button class="nav-btn" onclick="openDetail('l2')">Details</button>
+            </div>
+          </div>
+        </article>
+
+        <!-- Listing 3 -->
+        <article class="listing" role="listitem" aria-labelledby="l3-title">
+          <img src="https://images.unsplash.com/photo-1493809842364-78817add7ffb?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3&s=placeholder" alt="Luxury mansion exterior with pool">
+          <div class="meta">
+            <div id="l3-title" style="display:flex;justify-content:space-between;align-items:center">
+              <div>
+                <div style="font-weight:700">Beverly Hills-esque Mansion</div>
+                <div style="color:var(--muted);font-size:13px">7 bed • 10 bath • 12,000 sqft</div>
+              </div>
+              <div class="price">$24,500,000</div>
+            </div>
+
+            <div class="tags" style="margin-top:10px">
+              <div class="tag">Ultra-luxury</div>
+              <div class="tag">Pool + Theater</div>
+              <div class="tag">Dream Home</div>
+            </div>
+
+            <div style="display:flex;gap:8px;margin-top:12px">
+              <button class="nav-btn" onclick="openExampleTikTok(event)">Watch</button>
+              <button class="nav-btn" onclick="openDetail('l3')">Details</button>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- Two-column with video preview and price challenge -->
+    <section class="two-col">
+      <div class="card video-card" aria-labelledby="video-heading">
+        <h3 id="video-heading">Featured TikTok Review</h3>
+        <div class="video-thumb" role="region" aria-label="Video preview">
+          <!-- Placeholder for an embedded TikTok. Replace with TikTok embed script when live. -->
+          <div style="text-align:center;padding:14px;color:var(--muted)">
+            TikTok Review Preview<br><small style="color:var(--muted)">Replace with embed for full playback</small>
+          </div>
+        </div>
+
+        <div class="video-meta">
+          <div>
+            <div style="font-weight:700">Tiny House That Packs a Punch</div>
+            <div style="color:var(--muted);font-size:13px">Creator says: "You won't believe the layout!"</div>
+          </div>
+          <div style="text-align:right">
+            <div style="font-weight:800">$89,000</div>
+            <div style="color:var(--muted);font-size:12px">Revealed in the video</div>
+          </div>
+        </div>
+
+        <p style="color:var(--muted);margin-top:10px">Join the conversation — guess the price below and see how close you get.</p>
+
+        <div class="guess" role="form" aria-label="Price guess">
+          <input id="priceGuess" type="number" placeholder="Enter your price guess (USD)" aria-label="Price guess input">
+          <button onclick="submitGuess()">Guess</button>
+        </div>
+
+        <div id="guessResult" style="margin-top:10px;color:var(--muted)"></div>
+      </div>
+
+      <aside class="card">
+        <h3 style="margin-top:0">Why follow us?</h3>
+        <ul style="color:var(--muted);padding-left:18px;margin-top:8px">
+          <li>Fast, honest reviews — no filler.</li>
+          <li>Spot deals and dealbreakers at a glance.</li>
+          <li>Price-guess games and weekly market bites.</li>
+        </ul>
+
+        <hr style="border:none;border-top:1px solid rgba(255,255,255,0.03);margin:14px 0">
+
+        <h4 style="margin:0 0 8px 0">Services</h4>
+        <p style="color:var(--muted);margin:0 0 12px">Sponsored reviews, listing walkthroughs, social consulting for agents/creators.</p>
+        <a class="primary" href="#contact">Work with us</a>
+      </aside>
+    </section>
+
+    <!-- About & Blog -->
+    <section id="about" class="about card" aria-labelledby="about-heading">
+      <div>
+        <h2 id="about-heading">About HomeTour Reviews</h2>
+        <p style="color:var(--muted)">We started as a TikTok channel reviewing listings for fun — now we help viewers spot good buys, avoid bad layouts, and laugh at the weird. We test listings across budgets and formats so you don't have to watch 10 different videos to know if a listing is worth a call.</p>
+
+        <h3 style="margin-top:14px">Recent blog posts</h3>
+        <div class="blog-grid" role="list">
+          <article role="listitem" class="card" style="padding:12px">
+            <strong>3 Red Flags in Photos</strong>
+            <div style="color:var(--muted);font-size:13px;margin-top:8px">How to tell if the listing photos are hiding something important.</div>
+          </article>
+          <article role="listitem" class="card" style="padding:12px">
+            <strong>Top 5 Tiny House Tricks</strong>
+            <div style="color:var(--muted);font-size:13px;margin-top:8px">How designers make 300 sqft feel like 800 sqft.</div>
+          </article>
+        </div>
+      </div>
+
+      <div class="card" aria-labelledby="subscribe-heading">
+        <h4 id="subscribe-heading">Subscribe for weekly picks</h4>
+        <p style="color:var(--muted);margin-top:6px">Get one email with the best listings we covered that week.</p>
+        <form id="subscribeForm" onsubmit="subscribe(event)" aria-label="Subscribe form">
+          <input id="subName" type="text" placeholder="Your name" required>
+          <input id="subEmail" type="email" placeholder="Email address" required>
+          <button class="primary" type="submit">Subscribe</button>
+          <div id="subResult" style="color:var(--muted);margin-top:8px"></div>
+        </form>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" class="card" aria-labelledby="contact-heading">
+      <h2 id="contact-heading">Contact & Collabs</h2>
+      <p style="color:var(--muted)">Want a review? Represent a property? Want social tips for your listings? Fill this out and we'll reply.</p>
+
+      <form id="contactForm" onsubmit="submitContact(event)" aria-label="Contact form">
+        <input id="c-name" type="text" placeholder="Name" required>
+        <input id="c-email" type="email" placeholder="Email" required>
+        <input id="c-subject" type="text" placeholder="Subject (e.g., Review request)" required>
+        <textarea id="c-message" placeholder="Message or listing link" required></textarea>
+        <button class="primary" type="submit">Send message</button>
+        <div id="contactResult" style="color:var(--muted);margin-top:8px"></div>
+      </form>
+    </section>
+
+    <footer class="footer">
+      <div>© <span id="year"></span> HomeTour Reviews — Built for TikTok-era property lovers</div>
+      <div style="margin-top:6px;color:var(--muted)">Follow: <a href="https://www.tiktok.com" style="color:inherit;text-decoration:underline">TikTok</a> • <a href="#" style="color:inherit;text-decoration:underline">Instagram</a></div>
+    </footer>
+  </div>
+
+  <script>
+    // Small interactive behaviors. No external dependencies. Accessible + minimal.
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    function scrollToId(id){
+      document.getElementById(id).scrollIntoView({behavior:'smooth',block:'start'});
+    }
+
+    function openExampleTikTok(e){
+      e.preventDefault();
+      alert('This is a placeholder. Replace with your TikTok embed or link to the video.');
+    }
+
+    function copyListing(){
+      navigator.clipboard?.writeText(window.location.href).then(()=> {
+        alert('Listing link copied to clipboard!');
+      }, ()=> {
+        alert('Unable to copy automatically — please copy the URL manually.');
+      });
+    }
+
+    // Price guess demo logic:
+    const actualPrice = 89000; // example
+    function submitGuess(){
+      const input = document.getElementById('priceGuess');
+      const out = document.getElementById('guessResult');
+      const val = parseInt(input.value,10);
+      if(!val){ out.textContent = 'Enter a number to guess.'; return; }
+      const diff = Math.abs(val - actualPrice);
+      if(diff === 0){
+        out.textContent = 'Perfect! You nailed it 🎉';
+      } else if(diff <= actualPrice * 0.05){
+        out.textContent = `So close — within 5%! (Actual: $${actualPrice.toLocaleString()})`;
+      } else {
+        out.textContent = `Nice try — actual price: $${actualPrice.toLocaleString()}.`;
+      }
+    }
+
+    // Simulated subscribe/contact forms (replace with real back-end endpoints)
+    function subscribe(e){
+      e.preventDefault();
+      const name = document.getElementById('subName').value.trim();
+      const email = document.getElementById('subEmail').value.trim();
+      const res = document.getElementById('subResult');
+      // Minimal validation
+      if(!name || !email){ res.textContent = 'Please complete both fields.'; return; }
+      // Simulate success
+      res.textContent = 'Thanks! Check your inbox for a confirmation email (demo).';
+      document.getElementById('subscribeForm').reset();
+    }
+
+    function submitContact(e){
+      e.preventDefault();
+      const res = document.getElementById('contactResult');
+      // Basic validation:
+      const name = document.getElementById('c-name').value.trim();
+      const email = document.getElementById('c-email').value.trim();
+      const subject = document.getElementById('c-subject').value.trim();
+      const message = document.getElementById('c-message').value.trim();
+      if(!name || !email || !subject || !message){ res.textContent = 'Please fill all fields.'; return; }
+      // Simulate sending
+      res.textContent = 'Message sent (demo). We will reply to your email shortly.';
+      document.getElementById('contactForm').reset();
+    }
+
+    // Simple "openDetail" expands a modal-like panel (lightweight)
+    function openDetail(id){
+      alert('Details view demo — replace with modal or new page for listing: ' + id);
+    }
+  </script>
+</body>
+</html>
